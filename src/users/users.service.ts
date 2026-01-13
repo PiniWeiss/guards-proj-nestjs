@@ -7,9 +7,7 @@ import { UpdateAuthDto } from 'src/auth/dto/update-auth.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { where } from 'sequelize';
 
-
 // This should be a real class/interface representing a user entity
-
 
 @Injectable()
 export class UsersService {
@@ -19,29 +17,31 @@ export class UsersService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    return this.userModel.create({...createUserDto})
-  }
-  
-  findAll() {
-    return this.userModel.findAll()
+    return this.userModel.create({ ...createUserDto });
   }
 
-  async findOne(username: string): Promise<User| null> {
-    const user =  this.userModel.findOne({where: {username: username}})
-    if(!user) {
-      throw new Error("user not found")
-    }
-    return user
+  findAll() {
+    return this.userModel.findAll();
+  }
+
+  async findOne(username: string): Promise<User | null> {
+    const user = this.userModel.findOne({ where: { username: username } });
+    return user;
   }
 
   async update(username: string, updateUserDto: UpdateUserDto) {
-    return this.userModel.update(updateUserDto, {where: {username: username}})
+    this.userModel.update(updateUserDto, { where: { username } });
+   return this.findOne(username);
   }
 
-//   delete(username: string) {
-//     const isExists =  this.userModel.destroy({where: {username: username}})
-//     if(isExists === 1) {
-// return "deleted successfuly"
-//     }
-  // }
+  async remove(username: string) {
+    const user = await this.userModel.findOne({where: {username}})
+    console.log( user);
+    
+    if(!user) {
+      throw new Error("user not found")
+    }
+    this.userModel.destroy({where: {username}})
+    return "deleted successfuly"
+  }
 }
