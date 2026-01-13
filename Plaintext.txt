@@ -1,0 +1,61 @@
+=========================================
+🚀 NESTJS CLI & NPM CHEAT SHEET
+=========================================
+
+--- 1. פקודות התקנה וניהול פרויקט ---
+-----------------------------------------
+npm install -g @nestjs/cli          # התקנת ה-CLI של נסט גלובלית על המחשב
+nest new project-name               # יצירת פרויקט חדש מאפס
+nest --help                         # הצגת כל פקודות העזרה של ה-CLI
+
+
+--- 2. הרצת הפרויקט ---
+-----------------------------------------
+npm run start                       # הרצה רגילה
+npm run start:dev                   # הרצה במצב פיתוח (Watch Mode - ריענון אוטומטי)
+npm run start:debug                 # הרצה במצב דיבאג
+npm run build                       # קימפול הפרויקט לתיקיית dist (עבור פרודקשן)
+
+
+--- 3. יצירת רכיבים (NEST GENERATE) ---
+-----------------------------------------
+# פורמט: nest g <component> <name>
+
+nest g res [name]                   # (מומלץ!) יצירת CRUD מלא: Module, Controller, Service, DTOs
+nest g co [name]                    # יצירת Controller (נתיבי API)
+nest g s [name]                     # יצירת Service (לוגיקה עסקית)
+nest g mo [name]                    # יצירת Module (ארגון הפרויקט)
+nest g mi [name]                    # יצירת Middleware
+nest g gu [name]                    # יצירת Guard (הרשאות)
+nest g pi [name]                    # יצירת Pipe (ולידציה/טרנספורמציה)
+nest g interceptor [name]           # יצירת Interceptor
+nest g decorator [name]             # יצירת Custom Decorator
+
+
+--- 4. דגלים שימושיים ליצירת קבצים ---
+-----------------------------------------
+--no-spec                           # יצירת רכיב ללא קובץ טסטים (למשל: nest g co users --no-spec)
+--dry-run                           # בדיקה "על יבש" מה ייוצר בלי ליצור את הקבצים בפועל
+--flat                              # יצירת הקבצים בתיקייה הנוכחית ללא יצירת תיקייה חדשה
+
+
+--- 5. ספריות נלוות חשובות (NPM) ---
+-----------------------------------------
+# ולידציה (עבור DTOs)
+npm install class-validator class-transformer
+
+# עבודה עם סוגי נתונים משתנים (מה ששאלת קודם)
+npm install @nestjs/mapped-types
+
+# הגדרות סביבה (קבצי .env)
+npm install @nestjs/config
+
+# Swagger (תיעוד API)
+npm install @nestjs/swagger swagger-ui-express
+
+
+--- 6. ניקוי ופתרון בעיות ---
+-----------------------------------------
+rm -rf dist                         # מחיקת תיקיית הבילד (במקרה שהריענון נתקע)
+rm -rf node_modules                 # מחיקת ספריות (במקרה של בעיית התקנה)
+npm install                         # התקנה מחדש של כל הספריות
