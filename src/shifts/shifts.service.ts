@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { CreateShiftDto } from './dto/create-shift.dto';
-import { UpdateShiftDto } from './dto/update-shift.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+import { User } from './entities/shift.entity';
+import { CreateUserDto } from './dto/create-shift.dto';
+import { privateDecrypt } from 'crypto';
+import { UpdateAuthDto } from 'src/auth/dto/update-auth.dto';
+import { UpdateUserDto } from './dto/update-shift.dto';
+import { where } from 'sequelize';
+
+// This should be a real class/interface representing a user entity
 
 @Injectable()
-export class ShiftsService {
-  create(createShiftDto: CreateShiftDto) {
-    return 'This action adds a new shift';
+export class UsersService {
+  constructor(
+    @Inject('USERS_REPOSITORY')
+    private userModel: typeof User,
+  ) {}
+
+  async createUser(createUserDto: CreateUserDto) {
+    return this.userModel.create({ ...createUserDto });
   }
 
   findAll() {
-    return `This action returns all shifts`;
+    return this.userModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} shift`;
+  async findOne(username: string): Promise<User | null> {
+    const user = this.userModel.findOne({ where: { username: username } });
+    return user;
   }
 
-  update(id: number, updateShiftDto: UpdateShiftDto) {
-    return `This action updates a #${id} shift`;
+  async update(username: string, updateUserDto: UpdateUserDto) {
+    this.userModel.update(updateUserDto, { where: { username } });
+   return this.findOne(username);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} shift`;
+  async remove(username: string) {
+    const user = await this.userModel.findOne({where: {username}})
+    console.log( user);
+    
+    if(!user) {
+      throw new Error("user not found")
+    }
+    this.userModel.destroy({where: {username}})
+    return "deleted successfuly"
   }
 }
