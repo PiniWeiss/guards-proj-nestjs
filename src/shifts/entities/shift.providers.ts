@@ -1,7 +1,7 @@
 
 import { Shift } from './shift.entity';
 
-export const shiftsProviders = [
+export const shiftProviders = [
   {
     provide: 'SHIFTS_REPOSITORY',
     useValue: Shift,

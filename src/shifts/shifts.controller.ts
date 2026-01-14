@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
@@ -32,10 +31,7 @@ export class ShiftsController {
   }
 
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateShiftDto: UpdateShiftDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateShiftDto: UpdateShiftDto) {
     return this.shiftsService.update(id, updateShiftDto);
   }
 

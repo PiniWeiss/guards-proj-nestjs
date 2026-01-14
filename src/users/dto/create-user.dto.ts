@@ -9,7 +9,7 @@ export class CreateUserDto {
 
   @IsNumber()
   @MinLength(4)
-  password: number;
+  password: string;
 
   @IsEnum(UserRole)
   role: UserRole;

@@ -1,5 +1,12 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
-
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  BelongsToMany,
+} from 'sequelize-typescript';
+import { Assignment } from 'src/assignments/entities/assignment.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Table
 export class Shift extends Model {
@@ -14,8 +21,10 @@ export class Shift extends Model {
   startTime: string;
 
   @Column
-  endTime: string
+  endTime: string;
 
   @Column
-  location: string
+  location: string;
+  @BelongsToMany(() => User,{through: () => Assignment})
+  users: User[]; // מאפשר למפקד לראות מי משובץ לכל שמירה [cite: 84]
 }

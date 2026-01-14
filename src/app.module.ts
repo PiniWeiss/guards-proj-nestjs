@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './db-provider/db.module';
 import { ShiftsModule } from './shifts/shifts.module';
+import { AssignmentsModule } from './assignments/assignments.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UsersModule, ShiftsModule, DatabaseModule], 
+  imports: [
+    UsersModule,
+    ShiftsModule,
+    AuthModule,
+    AssignmentsModule,
+    DatabaseModule,
+  ],
 })
 export class AppModule {}
