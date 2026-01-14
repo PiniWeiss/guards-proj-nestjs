@@ -1,47 +1,47 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from './entities/shift.entity';
-import { CreateUserDto } from './dto/create-shift.dto';
+import { Shift } from './entities/shift.entity';
+import { CreateShiftDto } from './dto/create-shift.dto';
 import { privateDecrypt } from 'crypto';
 import { UpdateAuthDto } from 'src/auth/dto/update-auth.dto';
-import { UpdateUserDto } from './dto/update-shift.dto';
+import { UpdateShiftDto } from './dto/update-shift.dto';
 import { where } from 'sequelize';
 
 // This should be a real class/interface representing a user entity
 
 @Injectable()
-export class UsersService {
+export class ShiftsService {
   constructor(
-    @Inject('USERS_REPOSITORY')
-    private userModel: typeof User,
+    @Inject('SHIFTS_REPOSITORY')
+    private shiftModel: typeof Shift,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto) {
-    return this.userModel.create({ ...createUserDto });
+  async createShift(createShiftDto: CreateShiftDto) {
+    return this.shiftModel.create({ ...createShiftDto });
   }
 
   findAll() {
-    return this.userModel.findAll();
+    return this.shiftModel.findAll();
   }
 
-  async findOne(username: string): Promise<User | null> {
-    const user = this.userModel.findOne({ where: { username: username } });
-    return user;
+  async findOne(id: string): Promise<Shift | null> {
+    const shift = this.shiftModel.findOne({ where: { id: +id } });
+    return shift;
   }
 
-  async update(username: string, updateUserDto: UpdateUserDto) {
-    this.userModel.update(updateUserDto, { where: { username } });
-   return this.findOne(username);
+  async update(id: string, updateShiftDto: UpdateShiftDto) {
+    this.shiftModel.update(updateShiftDto, { where: { id: +id } });
+   return this.findOne(id);
   }
 
-  async remove(username: string) {
-    const user = await this.userModel.findOne({where: {username}})
-    console.log( user);
+  async remove(id: string) {
+    const shift = await this.shiftModel.findOne({where: {id: +id}})
+    console.log( shift);
     
-    if(!user) {
+    if(!shift) {
       throw new Error("user not found")
     }
-    this.userModel.destroy({where: {username}})
+    this.shiftModel.destroy({where: {id: +id}})
     return "deleted successfuly"
   }
 }

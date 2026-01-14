@@ -1,8 +1,8 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
-import { UserRole } from './shift-enum';
+
 
 @Table
-export class User extends Model {
+export class Shift extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -11,14 +11,11 @@ export class User extends Model {
   declare id: number;
 
   @Column
-  username: string;
+  startTime: string;
 
   @Column
-  password: string
+  endTime: string
 
-  @Column({
-    type: DataType.ENUM(...Object.values(UserRole)),
-    defaultValue: UserRole.SOLDIER,
-  })
-  role: UserRole;
+  @Column
+  location: string
 }

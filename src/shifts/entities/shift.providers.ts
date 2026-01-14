@@ -1,9 +1,9 @@
 
-import { User } from './shift.entity';
+import { Shift } from './shift.entity';
 
-export const usersProviders = [
+export const shiftsProviders = [
   {
-    provide: 'USERS_REPOSITORY',
-    useValue: User,
+    provide: 'SHIFTS_REPOSITORY',
+    useValue: Shift,
   },
 ];

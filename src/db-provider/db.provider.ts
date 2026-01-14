@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { User } from '../users/entities/user.entity';
+import { Shift } from 'src/shifts/entities/shift.entity';
 
 export const databaseProviders = [
   {
@@ -14,6 +15,7 @@ export const databaseProviders = [
         database: 'guards_db',
       });
       sequelize.addModels([User]);
+      sequelize.addModels([Shift]);
       await sequelize.sync();
       return sequelize;
     },

@@ -1,16 +1,10 @@
-import { IsString, MinLength, IsEnum, IsNumber } from 'class-validator';
-import { UserRole } from '../entities/shift-enum';
+import { IsString } from 'class-validator';
 
-
-export class CreateUserDto {
+export class CreateShiftDto {
   @IsString()
-  @MinLength(3)
-  username: string;
-
-  @IsNumber()
-  @MinLength(4)
-  password: number;
-
-  @IsEnum(UserRole)
-  role: UserRole;
+  startTime: string;
+  @IsString()
+  endTime: string;
+  @IsString()
+  location: string;
 }

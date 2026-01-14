@@ -8,39 +8,39 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { UsersService } from './shifts.service';
-import { CreateUserDto } from './dto/create-shift.dto';
-import { UpdateUserDto } from './dto/update-shift.dto';
+import { ShiftsService } from './shifts.service';
+import { CreateShiftDto } from './dto/create-shift.dto';
+import { UpdateShiftDto } from './dto/update-shift.dto';
 
-@Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+@Controller('shifts')
+export class ShiftsController {
+  constructor(private readonly shiftsService: ShiftsService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
+  create(@Body() createShiftDto: CreateShiftDto) {
+    return this.shiftsService.createShift(createShiftDto);
   }
 
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    return this.shiftsService.findAll();
   }
 
-  @Get(':username')
-  findOne(@Param('username') userName: string) {
-    return this.usersService.findOne(userName);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.shiftsService.findOne(id);
   }
 
-  @Put(':username')
+  @Put(':id')
   update(
-    @Param('username') username: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Param('id') id: string,
+    @Body() updateShiftDto: UpdateShiftDto,
   ) {
-    return this.usersService.update(username, updateUserDto);
+    return this.shiftsService.update(id, updateShiftDto);
   }
 
-  @Delete(':username')
-  remove(@Param('username') username: string) {
-    return this.usersService.remove(username);
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.shiftsService.remove(id);
   }
 }

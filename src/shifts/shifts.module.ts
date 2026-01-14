@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './shifts.service';
-import { UsersController } from './shifts.controller';
+import { ShiftsService } from './shifts.service';
+import { ShiftsController } from './shifts.controller';
 import { DatabaseModule } from 'src/db-provider/db.module';
-import { usersProviders } from './entities/shift.providers';
+import { shiftsProviders } from './entities/shift.providers';
 
 @Module({
-  controllers: [UsersController],
+  controllers: [ShiftsController],
   imports: [DatabaseModule],
-  providers: [UsersService, ...usersProviders],
-  exports: [UsersService],
+  providers: [ShiftsService, ...shiftsProviders],
+  exports: [ShiftsService],
 })
-export class UsersModule {}
+export class ShiftsModule {}
