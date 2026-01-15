@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
@@ -25,6 +24,7 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -35,6 +35,7 @@ export class UsersController {
     return this.usersService.findOne(userName);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Put(':username')
   update(
     @Param('username') username: string,
@@ -43,6 +44,7 @@ export class UsersController {
     return this.usersService.update(username, updateUserDto);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':username')
   remove(@Param('username') username: string) {
     return this.usersService.remove(username);

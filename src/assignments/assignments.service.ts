@@ -13,7 +13,10 @@ export class AssignmentsService {
     return this.assignmentModel.create({ ...createAssignmentDto });
   }
 
-  async findAllByUser(userId: number) {
-    return this.assignmentModel.findAll({ where: { userId } });
+  async findAllByUser(userid: number) {
+    const ass = await this.assignmentModel.findAll({ where: { userid: +userid } })
+    console.log(ass);
+    
+    return this.assignmentModel.findAll({ where: { userid: userid } });
   }
 }

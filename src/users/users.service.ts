@@ -22,7 +22,6 @@ export class UsersService {
       const saltRounds = 10;
       return await bcrypt.hash(password, saltRounds);
     } catch (error) {
-      // Clearer error message in the terminal
       throw new InternalServerErrorException(
         'Error during password encryption',
       );
@@ -31,24 +30,12 @@ export class UsersService {
 
   async createUser(createUserDto: CreateUserDto) {
     
-    // Now we are sure password is a string because of the ValidationPipe
     const hashedPassword = await this.hashPassword(createUserDto.password);
     return this.userModel.create({
       ...createUserDto,
       password: hashedPassword,
     });
-    // Continue with your saving logic...
   }
-
-  // async createUser(createUserDto: CreateUserDto) {
-  //   console.log('DTO Received:', createUserDto)
-  //   const salt = await bcrypt.genSalt(10);
-  //   const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
-  //   return this.userModel.create({
-  //     ...createUserDto,
-  //     password: hashedPassword,
-  //   });
-  // }
 
   findAll() {
     return this.userModel.findAll();
