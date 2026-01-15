@@ -1,4 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -11,14 +15,40 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
+  async hashPassword(password: string): Promise<string> {
+    console.log('Value to hash:', password);
+  console.log('Type of value:', typeof password);
+    try {
+      const saltRounds = 10;
+      return await bcrypt.hash(password, saltRounds);
+    } catch (error) {
+      // Clearer error message in the terminal
+      throw new InternalServerErrorException(
+        'Error during password encryption',
+      );
+    }
+  }
+
   async createUser(createUserDto: CreateUserDto) {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
+    
+    // Now we are sure password is a string because of the ValidationPipe
+    const hashedPassword = await this.hashPassword(createUserDto.password);
     return this.userModel.create({
       ...createUserDto,
       password: hashedPassword,
     });
+    // Continue with your saving logic...
   }
+
+  // async createUser(createUserDto: CreateUserDto) {
+  //   console.log('DTO Received:', createUserDto)
+  //   const salt = await bcrypt.genSalt(10);
+  //   const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
+  //   return this.userModel.create({
+  //     ...createUserDto,
+  //     password: hashedPassword,
+  //   });
+  // }
 
   findAll() {
     return this.userModel.findAll();
